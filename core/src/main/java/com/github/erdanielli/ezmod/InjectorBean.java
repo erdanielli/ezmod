@@ -7,13 +7,13 @@ class InjectorBean {
     private final Beans beans;
 
     public InjectorBean() {
-        this(new ModuleLoader());
+        this(new ModuleLoader("META-INF/services/", AbstractModule.class));
     }
 
     public InjectorBean(ModuleLoader moduleLoader) {
         this.beans = new BeansMap();
 
-        List<AbstractModule> modules = moduleLoader.loadModulesInOrder();
+        List<AbstractModule> modules = moduleLoader.loadModules();
         for (AbstractModule module : modules) {
             module.setBeans(beans);
             module.configure();

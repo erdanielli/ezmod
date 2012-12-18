@@ -13,6 +13,7 @@
 
     <modules>
         <module>core</module>
+        <module>test-module-a</module>
     </modules>
     
     <dependencies>
@@ -43,7 +44,7 @@
             <id>tests</id>
             <activation>
                 <file>
-                    <exists>src/test/groovy</exists>
+                    <exists>${basedir}/src/test/groovy</exists>
                 </file>
             </activation>
             <dependencies>
