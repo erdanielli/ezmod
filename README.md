@@ -2,6 +2,36 @@ ezMod
 ====
 Modular design made easy.
 ---
+True modular design consists in breaking your application into JARs, not just packages. For example:
+<pre>
+<b>myapp-api.jar</b>     --> your (well-tested) business logic goes here.
+  \_ src/main/java
+                  \_ app.UseCase (concrete class)
+                  \_ app.SomeRepository (UseCase colaborator injected at runtime)
+  \_ src/test/java
+                  \_ app.UseCaseTest (unit test your UseCase mocking the colaborator)
+                  
+<b>myapp-stubs.jar</b>   --> requires myapp-api.jar at compile-time
+  \_ src/main/java
+                  \_ app.stubs.SomeRepositoryStubs (Simple stubs for agile development)
+                  \_ app.Module --> export(app.SomeRepository.class, new app.stubs.SomeRepositoryStubs())
+  \_ src/main/resources
+                  \_ META-INF/services/com.github.erdanielli.ezmod.AbstractModule --> app.Module
+                  
+<b>myapp-jdbc.jar</b>    --> requires myapp-api.jar at compile-time (and probably a few JDBC frameworks)
+  \_ src/main/java
+                  \_ app.jdbc.SomeRepositoryJdbc (Ask the database)
+                  \_ app.Module --> export(app.SomeRepository.class, new app.jdbc.SomeRepository())
+  \_ src/main/resources
+                  \_ META-INF/services/com.github.erdanielli.ezmod.AbstractModule --> app.Module
+                  
+<b>myapp-client.jar</b> (bootstrap)
+  \_ src/main/java
+                  \_ app.Main --> new app.UseCase(Injector.getInstance(app.SomeRepository))
+  \_ libs
+        \_ myapp-api.jar (mandatory)
+        \_ EITHER myapp-stubs.jar OR myapp-jdbc.jar (maven profiles to the rescue
+</pre>  
 
 Only 3 steps required:
 
