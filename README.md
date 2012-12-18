@@ -30,7 +30,7 @@ True modular design consists in breaking your application into JARs, not just pa
                   \_ app.Main --> new app.UseCase(Injector.getInstance(app.SomeRepository))
   \_ libs
         \_ myapp-api.jar (mandatory)
-        \_ EITHER myapp-stubs.jar OR myapp-jdbc.jar (maven profiles to the rescue
+        \_ EITHER myapp-stubs.jar OR myapp-jdbc.jar (maven profiles to the rescue)
 </pre>  
 
 Only 3 steps required:
