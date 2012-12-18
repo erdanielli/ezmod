@@ -4,13 +4,23 @@ import lombok.Setter;
 
 public abstract class AbstractModule {
 
+    private String name;
+
     @Setter
     protected Beans beans;
 
-    protected abstract void configure();
-
-    protected <T,I extends T> void export(Class<T> type, I implementation) {
+    protected <T, I extends T> void export(Class<T> type, I implementation) {
         beans.add(type, implementation);
     }
+
+    protected String name() {
+        return getClass().getPackage().getName();
+    }
+
+    void postConstruct() {
+        this.name = name();
+    }
+
+    protected abstract void configure();
 
 }

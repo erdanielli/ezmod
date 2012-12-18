@@ -31,4 +31,13 @@ class ModuleATest extends Specification {
         Injector.getInstance(Set, true) == null
     }
 
+    def "should apply default module name to the containing package"() {
+        given:
+        def modules = new InjectorBean().modules
+
+        expect:
+        modules.find { it.class == ModuleA }.name() == 'com.github.erdanielli.ezmod'
+        modules.find { it.class == ModuleB }.name() == 'ModuleB'
+    }
+
 }

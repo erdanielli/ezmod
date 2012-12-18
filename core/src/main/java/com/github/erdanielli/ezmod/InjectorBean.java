@@ -6,15 +6,18 @@ class InjectorBean {
 
     private final Beans beans;
 
+    final List<AbstractModule> modules;
+
     public InjectorBean() {
         this(new ModuleLoader("META-INF/services/", AbstractModule.class));
     }
 
     public InjectorBean(ModuleLoader moduleLoader) {
-        this.beans = new BeansMap();
+        modules = moduleLoader.loadModules();
+        beans = new BeansMap();
 
-        List<AbstractModule> modules = moduleLoader.loadModules();
         for (AbstractModule module : modules) {
+            module.postConstruct();
             module.setBeans(beans);
             module.configure();
         }
