@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.github.erdanielli.ezmod</groupId>
         <artifactId>ezmod-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.1-SNAPSHOT</version>
     </parent>
 
     <build>
